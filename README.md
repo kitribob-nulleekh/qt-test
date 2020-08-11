@@ -1,2 +1,2 @@
-# qt-test
-qt-test assignment by KITRI BoB
+# vending-machine
+vending-machine assignment by KITRI BoB
