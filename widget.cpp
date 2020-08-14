@@ -36,6 +36,9 @@ void Widget::changeMoney(int diff)
 
 void Widget::checkProduct()
 {
+    if (0 <= money) ui->pbReset->setEnabled(true);
+    else ui->pbReset->setEnabled(false);
+
     if (100 <= money) ui->pbCoffee->setEnabled(true);
     else ui->pbCoffee->setEnabled(false);
 
