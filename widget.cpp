@@ -2,14 +2,16 @@
 #include "ui_widget.h"
 #include "qmessagebox.h"
 
+#define COFFEE_PRICE 100
+#define TEA_PRICE    150
+#define MILK_PRICE   200
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    ui->pbCoffee->setEnabled(false);
-    ui->pbTea->setEnabled(false);
-    ui->pbMilk->setEnabled(false);
+    checkProduct();
 }
 
 Widget::~Widget()
@@ -36,17 +38,10 @@ void Widget::changeMoney(int diff)
 
 void Widget::checkProduct()
 {
-    if (0 <= money) ui->pbReset->setEnabled(true);
-    else ui->pbReset->setEnabled(false);
-
-    if (100 <= money) ui->pbCoffee->setEnabled(true);
-    else ui->pbCoffee->setEnabled(false);
-
-    if (150 <= money) ui->pbTea->setEnabled(true);
-    else ui->pbTea->setEnabled(false);
-
-    if (200 <= money) ui->pbMilk->setEnabled(true);
-    else ui->pbMilk->setEnabled(false);
+    ui->pbReset  ->setEnabled(0             < money);
+    ui->pbCoffee ->setEnabled(COFFEE_PRICE <= money);
+    ui->pbTea    ->setEnabled(TEA_PRICE    <= money);
+    ui->pbMilk   ->setEnabled(MILK_PRICE   <= money);
 }
 
 void Widget::productOut(int price, const char *productName)
@@ -64,6 +59,14 @@ void Widget::changeOut(int value)
     changeMoney(-value);
 
     customMessageBox("Change Out", charValue);
+}
+
+void Widget::resetMoney()
+{
+    while(500 <= money) changeOut(500);
+    while(100 <= money) changeOut(100);
+    while(50 <= money)  changeOut(50);
+    while(10 <= money)  changeOut(10);
 }
 
 void Widget::customMessageBox(const char *title, const char *contents)
@@ -94,35 +97,20 @@ void Widget::on_pb500_clicked()
 
 void Widget::on_pbCoffee_clicked()
 {
-    productOut(100, "Coffee");
+    productOut(COFFEE_PRICE, "Coffee");
 }
 
 void Widget::on_pbTea_clicked()
 {
-    productOut(150, "Tea");
+    productOut(TEA_PRICE,    "Tea");
 }
 
 void Widget::on_pbMilk_clicked()
 {
-    productOut(200, "Milk");
+    productOut(MILK_PRICE,   "Milk");
 }
 
 void Widget::on_pbReset_clicked()
 {
-    while(500 <= money)
-    {
-    changeOut(500);
-    }
-    while(100 <= money)
-    {
-    changeOut(100);
-    }
-    while(50 <= money)
-    {
-    changeOut(50);
-    }
-    while(10 <= money)
-    {
-    changeOut(10);
-    }
+    resetMoney();
 }

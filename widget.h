@@ -20,6 +20,7 @@ public:
     void customMessageBox(const char* title, const char* contents);
     void productOut(int price, const char* productName);
     void changeOut(int value);
+    void resetMoney();
 
 private slots:
     void on_pb10_clicked();
